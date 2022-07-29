@@ -1,20 +1,34 @@
+
+from re import S
 from mininet.net import Mininet
 from mininet.topo import LinearTopo
 from mininet.topo import MinimalTopo
 from mininet.topolib import TreeTopo
 from mininet.cli import CLI
+from mininet.node import RemoteController, OVSSwitch
+
+from mininet.node import Controller, OVSBridge, OVSKernelSwitch, RemoteController
+from mininet.link import TCLink
 
 from mininet.topo import Topo
+
+import sys
 
 hosts=[]
 switches=[]
 
-class LinearTopo (Topo):
+netMask="127.0.0."
 
+   
+
+
+
+class LinearTopo (Topo):
+    
     #
-    #   s1------s2
-    #    |       |
-    #    h1      h2
+    #   s1------s2------s3
+    #    |       |       |   
+    #    h1      h2      h3
     #
 
     def __init__( self ):
@@ -23,21 +37,20 @@ class LinearTopo (Topo):
         Topo.__init__( self )
         
         # Add hosts and switches
-        leftHost = self.addHost( 'h1' )
-        rightHost = self.addHost( 'h2' )
-        leftSwitch = self.addSwitch( 's1' )
-        rightSwitch = self.addSwitch( 's2' )
+        for i in range(nHosts):
+            hosts.append(self.addHost("h{}".format(i+1),ip=netMask+"{}".format(i+1)))
+            print(hosts[i])
+        for i in range(nSwitches):
+            switches.append(self.addSwitch("s{}".format(i+1)))
 
-        # Add links
-        self.addLink( leftHost, leftSwitch )
-        self.addLink( leftSwitch, rightSwitch )
-        self.addLink( rightSwitch, rightHost )
+        # Add Link between hosts and switches
+        for i in range(nHosts):
+            self.addLink(hosts[i],switches[i%nSwitches])
+        
+        # Add Link between switches and switches
+        for i in range(nSwitches-1):
+            self.addLink(switches[i],switches[i+1])
 
-        hosts.append(leftHost)
-        hosts.append(rightHost)
-
-        switches.append(leftSwitch)
-        switches.append(rightSwitch)
 
 class RingTopo (Topo):
 
@@ -57,21 +70,20 @@ class RingTopo (Topo):
         Topo.__init__( self )
         
         # Add hosts and switches
-        h1 = self.addHost( 'h1' , ip = "127.0.0.1")
-        h2 = self.addHost( 'h2' , ip = "127.0.0.2")
-        h3 = self.addHost( 'h3' , ip = "127.0.0.3")
-        s1 = self.addSwitch( 's1' )
-        s2 = self.addSwitch( 's2' )
-        s3 = self.addSwitch( 's3' )
+        for i in range(nHosts):
+            hosts.append(self.addHost("h{}".format(i+1),ip=netMask+"{}".format(i+1)))
+            print(hosts[i])
+        for i in range(nSwitches):
+            switches.append(self.addSwitch("s{}".format(i+1)))
 
-        # Add links
-        self.addLink( h1, s1 )
-        self.addLink( h2, s2 )
-        self.addLink( h3, s3 )
-
-        self.addLink( s1, s2 )
-        self.addLink( s2, s3 )
-        self.addLink( s3, s1 )
+        # Add Link between hosts and switches
+        for i in range(nHosts):
+            self.addLink(hosts[i],switches[i%nSwitches])
+        
+        # Add Link between switches and switches
+        for i in range(nSwitches-1):
+            self.addLink(switches[i],switches[i+1])
+        self.addLink(switches[nSwitches],switches[0])
 
 class StarTopo (Topo):
 
@@ -80,7 +92,7 @@ class StarTopo (Topo):
     #              |
     #             s1          
     #             |                      
-    #             s4          
+    #             s0         
     #            /  \         
     #           /    \        
     #     h2---s2    s3---h3      
@@ -93,46 +105,61 @@ class StarTopo (Topo):
         Topo.__init__( self )
         
         # Add hosts and switches
-        h1 = self.addHost( 'h1' )
-        h2 = self.addHost( 'h2' )
-        h3 = self.addHost( 'h3' )
+        for i in range(nHosts):
+            hosts.append(self.addHost("h{}".format(i+1),ip=netMask+"{}".format(i+1)))
+            print(hosts[i])
+        for i in range(nSwitches):
+            switches.append(self.addSwitch("s{}".format(i+1)))
+        switches.append(self.addSwitch("s0"))
+
+        # Add Link between hosts and switches
+        for i in range(nHosts):
+            self.addLink(hosts[i],switches[i%nSwitches])
         
-        s1 = self.addSwitch( 's1' )
-        s2 = self.addSwitch( 's2' )
-        s3 = self.addSwitch( 's3' )
+        # Add Link between switches and switches
+        for i in range(nSwitches):
+            self.addLink(switches[i],switches[nSwitches])
         
-        s4 = self.addSwitch( 's4' )
-
-        # Add links
-        self.addLink( h1, s1 )
-        self.addLink( h2, s2 )
-        self.addLink( h3, s3 )
-
-        self.addLink( s1, s4 )
-        self.addLink( s2, s4 )
-        self.addLink( s3, s4 )
-
-      
 
 
+def switch(string):
+    if string=="l": 
+        return LinearTopo()
+    elif string=="ring":
+        return RingTopo()
+    elif string=="star":
+        return StarTopo()
+    else:
+        return None
 
+
+def foo():
+    print("foo")
+    return True
 
 def main():
     print("Start")  
-    topo = LinearTopo()
-    net = Mininet(topo=topo)
-
-    h3=net.addHost('h3')
-    print(h3)
-    it=net.items()
-    print(it[3])
     
-    link=h3.connectionsTo(switches[0])
-    net.addLink(link)
+    global nHosts,nSwitches
+
+    nHosts = int(raw_input('Enter total number of Hosts: '))
+    nSwitches = int( raw_input('Enter total number of Switches: '))
+
+    inputOK=False
+    while(not inputOK):
+        topo_type = raw_input('Enter start topology [linear,ring,star]: ')
+        topo = switch(topo_type)
+        if(topo!=None):
+            inputOK=True
+        else:
+            print(" ! Input not valid, try again\n")
+
+
+    net = Mininet(topo)
 
     net.start()
-    net.pingAll()
-    #CLI(net)
+    net.ping()
+    CLI(net)
     net.stop()  
     
     
