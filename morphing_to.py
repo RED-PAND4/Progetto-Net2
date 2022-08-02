@@ -1,5 +1,0 @@
-switch_to_star
-
-switch_to_linear
-
-switch_to_circle 
