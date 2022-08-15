@@ -5,7 +5,6 @@ from mininet.node import Controller, RemoteController, Ryu
 from mininet.cli import CLI
 from mininet.log import setLogLevel, info
 
-
 def deleteLinks(net, sw_list):
     for s in sw_list :
         for sw in sw_list:
@@ -17,21 +16,19 @@ def myNet():
 
     net = Mininet( controller=RemoteController, topo=None, build=False)
 
-    #controller
-    # Add Controllers
-    c0 = net.addController( 'c0',  port=6633)   
+    # Add Controller
+    c0 = net.addController( 'c0', port=6633)    
 
     #number of host
-    host_num=10
-    switch_num = 5
+    host_num = 8
+    switch_num = 4
 
     # Create switches
-    sw_list=[ net.addSwitch( 's%d' % n ) for n in range ( 0,switch_num ) ]
-    print(sw_list)
+    sw_list=[ net.addSwitch( 's%d' % n ) for n in range ( 1,switch_num+1 ) ]
 
 
     # Create host
-    hs_list = [net.addHost( 'h%d' % n) for n in range ( 0,host_num )]
+    hs_list = [net.addHost( 'h%d' % n, mac="00:00:00:00:cc:%02d" % n) for n in range ( 1,host_num+1 )]
     
 
     # Create Links
@@ -42,31 +39,24 @@ def myNet():
         if c==0:
             i=i+1
         c=not c
-
-    # a=1
-    # for s in sw_list:
-        # if a  == switch_num:
-            # break
-        # prova = net.addLink(s, sw_list[ a ])
-        # a =a+ 1 
+        #i+=1
             
-
     net.build()
-    c0.start()
+    net.start()
 
     for s in sw_list:
         s.start([ c0 ])
-
+    
     
     while 1 : 
-        name = input("Enter your name: ")
+        name = input(" Enter command (bus, ring, star, cli, quit): ")
 
         if name == "bus":
             print("*** BUS TOPOLOGY ***")
-            c0.stop()
-            #delete links
-            deleteLinks(net, sw_list)
 
+            #delete links
+            deleteLinks(net, sw_list) 
+            
             #add bus links
             a=1
             for s in sw_list:
@@ -75,20 +65,29 @@ def myNet():
                 net.addLink(s, sw_list[ a ])
                 print(" %s\n  |" % s.name)
                 a += 1 
-            net.build()
-            c0.start()
+
             net.start()
             
-
-
         if name =="ring":
             print("*** RING TOPOLOGY ***")
+            deleteLinks(net, sw_list)
+            cons = 1 
 
-
-
+            #add ring links
+            a=1
+            print(c0)
+            for s in sw_list:
+                if a  == switch_num:
+                    a -= 1
+                    net.addLink(sw_list[a], sw_list[0])
+                    break
+                net.addLink(s, sw_list[ a ])
+                a += 1 
+            print("\n")
+            net.start()
+            
         if name == "star":
             print("*** STAR TOPOLOGY ***")
-            c0.stop()
             #delete links
             deleteLinks(net, sw_list)
 
@@ -100,8 +99,6 @@ def myNet():
                 else:
                     print("  %s" % s.name)
             print("\n")
-            net.build()
-            c0.start()
             net.start()
 
 

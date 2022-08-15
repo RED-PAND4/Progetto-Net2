@@ -10,3 +10,38 @@ Comandi utili:
 | sudo mn -c | pulisce mininet |
 
 http://demo.spear.narmox.com/app/?apiurl=demo#!/mininet
+
+
+
+
+
+## Comandi morphing :
+
+***start controller***
+
+ryu-manager morph_controller.py
+
+***run network***
+
+sudo python3 morph_network.py
+ 
+_______________
+
+*command*
+
+bus -> bus topology
+
+ring -> ring topology
+
+star -> star topology
+
+cli -> enter mininet CLI for mininet command
+
+quit -> end all
+
+_______________
+*help*
+
+you need to wait the spanning tree before trying to ping the hosts, it ends when you see the "/FORWARD" at the end of the line in the controller terminal or you can wait 40-50 seconds from when you decide the topology
+
+
