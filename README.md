@@ -22,7 +22,7 @@ git clone https://github.com/RED-PAND4/Progetto-Net2
 * [Mininet](http://mininet.org/)
 * [Python & Python3](https://www.python.org/)
 
-## Comandi morphing :
+## Comands for morphing :
 
 ***start controller***
 
