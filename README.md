@@ -1,7 +1,7 @@
 # SDN Project: Morphing Network Slices
 <p align="center">
   <a href="">
-    <img src="image/logo_black.png">
+    <img src="image/logo_black.png",  style="max-width: 50%;">
   </a>
   <h2 align="center">Morphing Network Slices</h2>
 
