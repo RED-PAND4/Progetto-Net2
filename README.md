@@ -35,17 +35,21 @@ sudo python3 morph_network.py
 _______________
 
 *command*
-
-bus -> bus topology
-
-ring -> ring topology
-
-star -> star topology
-
-cli -> enter mininet CLI for mininet command
-
-quit -> end all
-
+```
+ Enter command (bus, ring, star, cli, quit): bus -> bus topology
+```
+```
+ Enter command (bus, ring, star, cli, quit): ring -> ring topology
+```
+```
+ Enter command (bus, ring, star, cli, quit): star -> star topology
+```
+```
+ Enter command (bus, ring, star, cli, quit): cli -> enter mininet CLI for mininet command
+```
+```
+ Enter command (bus, ring, star, cli, quit): quit -> end all
+```
 _______________
 *help*
 
