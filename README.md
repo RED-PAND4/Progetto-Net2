@@ -14,7 +14,7 @@
 
 ### Download
 ```
-git clone https://github.com/RED-PAND4/Progetto-Net2
+git clone https://github.com/RED-PAND4/SDN-Project.git
 ```
 ### Prerequisites
 * Linux OS (tested on [Ubuntu 20.04](https://releases.ubuntu.com/20.04/))
