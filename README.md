@@ -7,7 +7,7 @@
 
   <p align="center">
   Exam project for Softwarized and Virtualized Mobile Networks 
-  <br>University of Trento - Prof. <a href="">Fabrizio Granelli</a>
+  <br>University of Trento - Prof. <a href="https://github.com/fabrizio-granelli">Fabrizio Granelli</a>
   </p>
 </p>
 <br>
