@@ -64,6 +64,13 @@ sudo mn -c ; sudo fuser -k 6633/tcp
 ```
 sudo mn --custom ryu_api_solution/network.py --controller remote --topo test --arp
 ```
+That's how the *physical network* looks like:
+<div>
+    <img src="image/Net.jpg",  style="width: 50%;">
+</div>
+ 
+
+
 3. Run Ryu controller with rest api:
 ```
 python3 ryu_api_solution/run_controller.py 
