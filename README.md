@@ -64,25 +64,33 @@ sudo mn -c ; sudo fuser -k 6633/tcp
 ```
 sudo mn --custom ryu_api_solution/network.py --controller remote --topo test --arp
 ```
-That's how the *physical network* looks like:
-<div>
-    <img src="image/Net.jpg",  style="width: 50%;">
-</div>
- 
-
-
 3. Run Ryu controller with rest api:
 ```
 python3 ryu_api_solution/run_controller.py 
 ```
+That's how the **physical network** looks like:
+<div>
+    <img src="image/Net.jpg",  style="width: 50%;">
+</div>
+
 4. Run our app to slice the network
 ```
 python3 ryu_api_solution/slice_topology.py 
 ```
+Now the network has been sliced: "red" host can only communicate with "red" hosts and the same is for the "blue" ones
+<div>
+    <img src="image/Sliced.jpg",  style="width: 50%;">
+</div>
+
 5. Simulate a link down between s2 and s5
 ```
 mininet> link s2 s5 down
 ```
+Finally we 
+<div>
+    <img src="image/Link Down.jpg",  style="width: 50%;">
+</div>
+
 6. Run our app to solve the broken link
 ```
 python3 ryu_api_solution/solve_link_down.py
