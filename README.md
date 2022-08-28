@@ -103,13 +103,12 @@ Now the network has been sliced: "red" host can only communicate with "red" host
 ```
 mininet> link s2 s5 down
 ```
-Finally we 
-<div>
-    <img src="image/Link Down.jpg",  style="width: 50%;">
-</div>
-
 6. Run our app to solve the broken link
 ```
 python3 ryu_api_solution/solve_link_down.py
 ```
+Finally we reprogrammed two of the switches, to overcome the use of the link between s2 and s5 and restore the functionality of the network.
+<div>
+    <img src="image/Link Down.jpg",  style="width: 50%;">
+</div>
 
