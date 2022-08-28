@@ -35,27 +35,35 @@ sudo python3 morph_network.py
 _______________
 
 *command*
+
 ```
- Enter command (bus, ring, star, cli, quit): bus -> bus topology
+ Enter command (bus, ring, star, cli, quit): bus
 ```
+
 <div>
     <img src="image/Bus.png",  style="width: 50%;">
 </div>
+
 ```
- Enter command (bus, ring, star, cli, quit): ring -> ring topology
+ Enter command (bus, ring, star, cli, quit): ring
 ```
+
 <div>
     <img src="image/Ring.png",  style="width: 50%;">
 </div>
+
 ```
- Enter command (bus, ring, star, cli, quit): star -> star topology
+ Enter command (bus, ring, star, cli, quit): star
 ```
+
 <div>
     <img src="image/Star.png",  style="width: 50%;">
 </div>
+
 ```
  Enter command (bus, ring, star, cli, quit): cli -> enter mininet CLI for mininet command
 ```
+
 ```
  Enter command (bus, ring, star, cli, quit): quit -> end all
 ```
