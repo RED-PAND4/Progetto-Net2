@@ -38,12 +38,21 @@ _______________
 ```
  Enter command (bus, ring, star, cli, quit): bus -> bus topology
 ```
+<div>
+    <img src="image/Bus.jpg",  style="width: 50%;">
+</div>
 ```
  Enter command (bus, ring, star, cli, quit): ring -> ring topology
 ```
+<div>
+    <img src="image/Ring.jpg",  style="width: 50%;">
+</div>
 ```
  Enter command (bus, ring, star, cli, quit): star -> star topology
 ```
+<div>
+    <img src="image/Star.jpg",  style="width: 50%;">
+</div>
 ```
  Enter command (bus, ring, star, cli, quit): cli -> enter mininet CLI for mininet command
 ```
