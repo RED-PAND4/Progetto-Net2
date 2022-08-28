@@ -71,7 +71,6 @@ def myNet():
         if name =="ring":
             print("*** RING TOPOLOGY ***")
             deleteLinks(net, sw_list)
-            cons = 1 
 
             #add ring links
             a=1
